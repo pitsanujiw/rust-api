@@ -57,7 +57,7 @@ async fn main() {
             post(create_user::<SqlxUserRepo>).get(list_users::<SqlxUserRepo>),
         )
         .route(
-            "/users/:id",
+            "/users/{id}",
             get(get_user::<SqlxUserRepo>)
                 .put(update_user::<SqlxUserRepo>)
                 .delete(delete_user::<SqlxUserRepo>),

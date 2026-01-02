@@ -22,7 +22,8 @@ struct UserRow {
     id: Uuid,
     username: String,
     email: String,
-    active: bool,
+    #[sqlx(rename = "active")]
+    is_active: bool,
     created_at: DateTime<Utc>,
     updated_at: DateTime<Utc>,
 }
@@ -33,7 +34,7 @@ impl From<UserRow> for User {
             id: r.id,
             username: r.username,
             email: r.email,
-            active: r.active,
+            active: r.is_active,
             created_at: r.created_at,
             updated_at: r.updated_at,
         }
