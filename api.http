@@ -1,0 +1,56 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### Health
+GET {{baseUrl}}/health
+
+### ------------------------------------------------------------
+### CREATE user
+# @name createUser
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+  "username": "jiw",
+  "email": "jiw+1@example.com",
+  "active": true
+}
+
+### Save id from create response (REST Client supports this)
+@userId = {{createUser.response.body.id}}
+
+### ------------------------------------------------------------
+### FIND ONE (by id)
+GET {{baseUrl}}/users/{{userId}}
+
+### ------------------------------------------------------------
+### FIND MANY (list all)
+GET {{baseUrl}}/users?limit=20&offset=0
+
+### FIND MANY (filter active=true)
+GET {{baseUrl}}/users?active=true&limit=20&offset=0
+
+### ------------------------------------------------------------
+### UPDATE user (partial update)
+PUT {{baseUrl}}/users/{{userId}}
+Content-Type: {{contentType}}
+
+{
+  "username": "wadi",
+  "active": false
+}
+
+### UPDATE user (change email)
+PUT {{baseUrl}}/users/{{userId}}
+Content-Type: {{contentType}}
+
+{
+  "email": "jiw+updated@example.com"
+}
+
+### ------------------------------------------------------------
+### DELETE user
+DELETE {{baseUrl}}/users/{{userId}}
+
+### After delete should be 404
+GET {{baseUrl}}/users/{{userId}}
